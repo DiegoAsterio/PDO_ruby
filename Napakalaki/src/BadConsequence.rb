@@ -1,62 +1,55 @@
 #encoding utf-8
 module Napakalaki
+
+  require_relative 'Player.rb'
+  require_relative 'TreasureKind.rb'
+
   class BadConsequence
-    DEAD = 0
+    MAXTREASURES = 0
     INV = -1
 
     def initialize(aText,someLevels,someVisibleTreasures,someHiddenTreasures,
-      someSpecificVisibleTreasures,someSpecificHiddenTreasures,death)
+      someSpecificVisibleTreasures,someSpecificHiddenTreasures)
       @text = aText
       @levels = someLevels
       @nVisibleTreasures = someVisibleTreasures
       @nHiddenTreasures = someHiddenTreasures
       @specificVisibleTreasures = someSpecificVisibleTreasures
       @specificHiddenTreasures = someSpecificHiddenTreasures
-      @death = death
+    end
+
+    def isEmpty
+      return @nVisibleTreasures == MAXTREASURES && @nHiddenTreasures == MAXTREASURES && @specificHiddenTreasures.empty? && @specificVisibleTreasures.empty?
     end
 
     def self.newDeath(text)
-      new(text,DEAD,DEAD,DEAD,nil,nil,true)
+      new(text,Player::MAXLEVEL,MAXTREASURES,MAXTREASURES,Array.new,Array.new)
     end
 
     def self.newLevelNumberOfTreasures(aText,someLevels,someVisibleTreasures,someHiddenTreasures)
-      new(aText,someLevels,someVisibleTreasures,someHiddenTreasures,nil,nil,false)
+      new(aText,someLevels,someVisibleTreasures,someHiddenTreasures,Array.new,Array.new)
     end
 
     def self.newLevelSpecificTreasures(aText,someLevels,someSpecificVisibleTreasures,
       someSpecificHiddenTreasures)
-      new(aText,someLevels,INV,INV,someSpecificVisibleTreasures,someSpecificHiddenTreasures,false)
+      new(aText,someLevels,INV,INV,someSpecificVisibleTreasures,someSpecificHiddenTreasures)
     end
 
     #Test.instance_eval { undef :new }
     private_class_method :new
 
-    attr_reader :text
-    attr_reader :levels
-    attr_reader :nVisibleTreasures
-    attr_reader :nHiddenTreasures
-    attr_reader :specificVisibleTreasures
-    attr_reader :specificHiddenTreasures
-    attr_reader :death
+    attr_reader :text, :levels, :nVisibleTreasures, :nHiddenTreasures, :specificVisibleTreasures, :specificHiddenTreasures
 
-    def to_s()
-      ret = "#{@text} "
-      if @death == true
-        ret = ret + "Estas muerto, no te preocupes sigues jugando."
-      else
-        ret = ret + " Pierdes #{@levels} niveles "
-        if @specificVisibleTreasures != nil
-          ret = ret + " lista de tesoros visibles perdidos: [#{@specificVisibleTreasures.join(",")}]"
-        else
-          ret = ret + " número de tesoros visibles perdidos: #{@nVisibleTreasures}"
-        end
-        if @specificHiddenTreasures != nil
-          ret = ret + " lista de tesoros ocultos perdidos: [#{@specificHiddenTreasures.join(",")}]"
-        else
-          ret = ret + " número de tesoros ocultos perdidos: #{@nHiddenTreasures}"
-        end
-      end
-      ret
+    def substractVisibleTreasures
+
+    end
+
+    def substractHiddenTreasures
+
+    end
+
+    def adjustToFitTreasureLists(v, h)
+
     end
   end
 

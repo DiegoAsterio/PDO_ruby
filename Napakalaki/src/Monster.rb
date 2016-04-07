@@ -8,20 +8,19 @@ module Napakalaki
     def initialize(aText,aLevel,aBadConsequence,aPrize)
       @name = aText
       @combatLevel = aLevel
-      @bc = aBadConsequence
+      @badConsequence = aBadConsequence
       @prize = aPrize
     end
 
-    attr_reader :name
-    attr_reader :combatLevel
-    attr_reader :bc
-    attr_reader :prize
-
-    def to_s()
-      str = "Nombre: #{@name} \n\t Nivel de combate: #{@combatLevel}\n"
-      str = str + "\nConsecuencia:\n\t" + @bc.to_s
-      str = str + "\nRecompensa:\n\t" + @prize.to_s + "\n\n\n"
+    def getLevelsGained
+      @prize.level
     end
+
+    def getTreasuresGained
+      @prize.treasures
+    end
+
+    attr_reader :name, :combatLevel, :badConsequence, :prize
 
   end
 end

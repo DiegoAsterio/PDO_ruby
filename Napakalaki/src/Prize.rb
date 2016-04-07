@@ -6,14 +6,12 @@ module Napakalaki
     def initialize(treasures, level)
       @treasures  = treasures
       @level = level
+      @treasures.freeze
+      @level.freeze
     end
 
     attr_reader :treasures
     attr_reader :level
-
-    def to_s()
-      "Tesoros ganados: #{@treasures} \t Niveles ganados: #{@level}"
-    end
 
   end
 
