@@ -1,6 +1,6 @@
 #encoding utf-8
 
-module Napakalaki
+module NapakalakiGame
 
   require_relative 'Monster.rb'
   require_relative 'CombatResult.rb'
@@ -17,26 +17,41 @@ module Napakalaki
 
     private
 
-    @@instance = Napakalaki.new
+    INV = -1
+
+
 
     def initialize
-      @currentPlayerIndex
-      @currentPlayer
+      @currentPlayerIndex = INV
+      @currentPlayer = nil
       @players = Array.new()
-      @dealer
-      @currentMonster
+      @dealer = CardDealer.instance
+      @currentMonster = nil
     end
 
-    def initPlayers(names)
+    @@instance = Napakalaki.new
 
+    def initPlayers(names)
+      names.each do |name|
+        @players << Player.new(name)
+      end
     end
 
     def nextPlayer
-
+      if @currentPlayerIndex == INV
+        @currentPlayerIndex = rand(@players.length)
+      else
+        @currentPlayerIndex = (@currentPlayerIndex + 1) % @players.length
+      end
+      return @players.at(@currentPlayerIndex);
     end
 
     def nextTurnAllowed
-
+      if @currentPlayer != nil
+        return @currentPlayer.validState
+      else
+        return true
+      end
     end
 
     public
@@ -46,39 +61,56 @@ module Napakalaki
     end
 
     def developCombat
-
+      @currentPlayer.combat(@currentMonster)
     end
 
     def discardVisibleTreasures(treasures)
-
+      treasures.each do |tre|
+        @currentPlayer.discardVisibleTreasure(tre)
+      end
     end
 
     def discardHiddenTreasures(treasures)
-
+      treasures.each do |tre|
+        @currentPlayer.discardHiddenTreasure(tre)
+      end
     end
 
     def makeTreasuresVisible(treasures)
-
+      treasures.each do |tre|
+        @currentPlayer.makeTreasureVisible(tre)
+      end
     end
 
     def initGame(players)
-
+      initPlayers(players)
+      @dealer.initCards
+      nextTurn
     end
 
     def getCurrentPlayer
-
+      @currentPlayer
     end
 
     def getCurrentMonster
-
+      @currentMonster
     end
 
     def nextTurn
-
+      stateOK = nextTurnAllowed;
+      if stateOK
+        @currentMonster = @dealer.nextMonster
+        @currentPlayer = nextPlayer
+        dead = @currentPlayer.isDead
+        if dead
+          @currentPlayer.initTreasures
+        end
+      end
+      return stateOK
     end
 
     def endOfGame(result)
-
+      return result == CombatResult::WINGAME
     end
 
     private_class_method :new

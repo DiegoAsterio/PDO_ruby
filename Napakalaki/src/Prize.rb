@@ -1,5 +1,5 @@
 #encoding utf-8
-module Napakalaki
+module NapakalakiGame
 
   class Prize
 
@@ -8,6 +8,10 @@ module Napakalaki
       @level = level
       @treasures.freeze
       @level.freeze
+    end
+
+    def to_s
+      return "Premio: Ganas #{@treasures} tesoros y  #{@level} niveles"
     end
 
     attr_reader :treasures

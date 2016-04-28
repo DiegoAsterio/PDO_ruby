@@ -1,5 +1,5 @@
 #encoding utf-8
-module Napakalaki
+module NapakalakiGame
 
 class CardDealer
   require_relative 'Monster.rb'
@@ -142,7 +142,7 @@ class CardDealer
      bad = BadConsequence.newLevelNumberOfTreasures("Toses los pulmones y pierdes 2 niveles.", 2, 0, 0)
      @unusedMonsters << (Monster.new("La que redacta en las sombras", 3, bad, Prize.new(1,1)))
 
-     bad = BadConsequence.newDeath("Estos monstruos resultan bastante superficiales y te aburren mortalmente. Estás muerto.")
+     bad = BadConsequence.newDeath("Estos monstruos resultan bastante superficiales y te aburren mortalmente.")
      @unusedMonsters << (Monster.new("Los hondos verdes", 7, bad, Prize.new(2,1)))
 
      bad = BadConsequence.newLevelNumberOfTreasures("Pierdes 2 niveles y 2 tesoros ocultos.", 2, 0, 2)
@@ -154,10 +154,10 @@ class CardDealer
      bad = BadConsequence.newLevelNumberOfTreasures("Da mucho asquito. Pierdes 3 niveles.", 3, 0, 0)
      @unusedMonsters << (Monster.new("Pollipólipo volante", 3, bad, Prize.new(1,1)))
 
-     bad = BadConsequence.newDeath("No le hace gracia que pronuncien mal su nombre. Estás muerto.")
+     bad = BadConsequence.newDeath("No le hace gracia que pronuncien mal su nombre.")
      @unusedMonsters << (Monster.new("Yskhtihyssg-Goth", 12, bad, Prize.new(3,1)))
 
-     bad = BadConsequence.newDeath("La familia te atrapa. Estás muerto.")
+     bad = BadConsequence.newDeath("La familia te atrapa.")
      @unusedMonsters << (Monster.new("Familia feliz", 1, bad, Prize.new(4,1)))
 
      bad = BadConsequence.newLevelSpecificTreasures("La quinta directiva primaria te obliga a perder 2 niveles y un tesoro 2 manos visible.", 2, [TreasureKind::BOTHHANDS], [])
@@ -189,12 +189,22 @@ class CardDealer
   end
 
   def nextTreasure
+    if @unusedTreasures.empty?
+      @unusedTreasures = @usedTreasures
+      @usedTreasures = Array.new
+      shuffleTreasures
+    end
     t = @unusedTreasures.last
     @unusedTreasures.pop
-    t
+    return t
   end
 
   def nextMonster
+    if @unusedMonsters.empty?
+      @unusedMonsters = @usedMonsters
+      @usedMonsters = Array.new
+      shuffleMonsters
+    end
     m = @unusedMonsters.last
     @unusedMonsters.pop
     m

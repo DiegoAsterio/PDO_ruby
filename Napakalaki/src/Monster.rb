@@ -1,5 +1,5 @@
 #encoding utf-8
-module Napakalaki
+module NapakalakiGame
   require_relative 'Prize.rb'
   require_relative 'BadConsequence.rb'
 
@@ -21,6 +21,12 @@ module Napakalaki
     end
 
     attr_reader :name, :combatLevel, :badConsequence, :prize
+
+    def to_s
+      str = "Nombre: #{@name} \t Nivel de combate: #{@combatLevel}\n"
+      str = str + "\nConsecuencia:\n\t" + @badConsequence.to_s
+      str = str + "\nRecompensa:\n\t" + @prize.to_s + "\n\n\n"
+    end
 
   end
 end

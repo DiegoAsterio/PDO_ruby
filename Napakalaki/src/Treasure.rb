@@ -1,6 +1,6 @@
 #encoding utf-8
 
-module Napakalaki
+module NapakalakiGame
   require_relative 'TreasureKind.rb'
 
   class Treasure
@@ -11,6 +11,10 @@ module Napakalaki
     end
 
     attr_reader :name, :bonus, :type
+
+    def to_s
+      return "Tesoro: \n" + @name + " sube #{@bonus} niveles y es del tipo #{@type}"
+    end
 
   end
 end

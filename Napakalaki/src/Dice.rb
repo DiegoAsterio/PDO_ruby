@@ -1,10 +1,10 @@
 #encoding utf-8
-module Napakalaki
+module NapakalakiGame
   #require 'active_support'
   class Dice
     #cattr_reader :instance
     private
-    
+
     def initialize
 
     end

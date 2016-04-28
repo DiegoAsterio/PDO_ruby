@@ -1,5 +1,5 @@
 #encoding utf-8
-module Napakalaki
+module NapakalakiGame
   module TreasureKind
     ARMOR = :armor
     ONEHAND = :onehand
